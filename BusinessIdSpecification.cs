@@ -26,10 +26,49 @@ namespace CGIExcercise
 		public IEnumerable<string> ReasonsForDissatisfaction { get { return _ReasonsForDissatisfaction; } }
 
 		// Checks if given businessId satisfies the validation constraints
-		/// <param name="entity">given businessId</param>
+		// Specs from http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm#y-tunnus2
+		/// <param name="businessId">given businessId</param>
 		/// <returns>true if businessId is valid</returns>
-		public bool IsSatisfiedBy(string entity) {
-			return false;
+		public bool IsSatisfiedBy(string businessId) {
+			bool testOk = true;
+			int[] multiplyOperands = {7, 9, 10, 5, 8, 4, 2};
+			
+			// static analysis
+			if (businessId.Length == 0 || businessId.Length > 9) {
+				_ReasonsForDissatisfaction.Add(SpecificationHelper.OutOfRange);
+				testOk = false;
+			}
+			for (int i = 0; i < businessId.Length; i++) {
+				if ((i != 7) && !Char.IsNumber(businessId[i]) || (i == 7) && businessId[i] == '-') {
+					_ReasonsForDissatisfaction.Add(SpecificationHelper.SyntacticallyIncorrect);
+					testOk = false;
+					break;
+				}
+			}
+			
+			// check digit analysis
+			int sumOfProducts = 0;
+			for (int i = 0; i < businessId.Length && i < multiplyOperands.Length; i++) {
+				sumOfProducts += multiplyOperands[i] * businessId[i];
+			}
+			sumOfProducts = sumOfProducts % 11;
+			int checksum = 0;
+			if (sumOfProducts == 0) {
+				checksum = 0;
+			} else if (sumOfProducts == 1) {	// no businessIds with checksum 1
+				_ReasonsForDissatisfaction.Add(SpecificationHelper.CheckDigitFailed);
+				testOk = false;
+			} else {
+				checksum = 11 - checksum;
+			}
+			
+			// the last character in businessId must be the same as checksum
+			if (checksum != (int)Char.GetNumericValue(businessId[businessId.Length - 1])) {
+				_ReasonsForDissatisfaction.Add(SpecificationHelper.CheckDigitFailed);
+				testOk = false;
+			}
+			
+			return testOk;
 		}
 	}
 }

@@ -17,6 +17,6 @@ namespace CGIExcercise
 	{
 		public const string OutOfRange = "field length out of range";
 		public const string SyntacticallyIncorrect = "field syntactically incorrect";
-		public const string NumericCheckFailed = "field failed numeric check";
+		public const string CheckDigitFailed = "field failed numeric check";
 	}
 }

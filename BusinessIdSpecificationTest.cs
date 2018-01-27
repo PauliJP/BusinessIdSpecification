@@ -31,5 +31,34 @@ namespace CGIExcercise
 			Assert.IsNotEmpty(reasons);
 			Assert.Contains(SpecificationHelper.OutOfRange, (System.Collections.ICollection)reasons);
 		}
+		
+		[Test]
+		public void TestValidId()
+		{
+			bool result = _businessIdSpecification.IsSatisfiedBy("1572860-0");
+			IEnumerable<string> reasons = _businessIdSpecification.ReasonsForDissatisfaction;
+			Assert.IsTrue(result);
+			Assert.IsEmpty(reasons);
+		}
+		
+		[Test]
+		public void TestInvalidFormatId()
+		{
+			bool result = _businessIdSpecification.IsSatisfiedBy("123-45678");
+			IEnumerable<string> reasons = _businessIdSpecification.ReasonsForDissatisfaction;
+			Assert.IsFalse(result);
+			Assert.IsNotEmpty(reasons);
+			Assert.Contains(SpecificationHelper.SyntacticallyIncorrect, (System.Collections.ICollection)reasons);
+		}
+		
+		[Test]
+		public void TestCheckDigitFailId()
+		{
+			bool result = _businessIdSpecification.IsSatisfiedBy("0737546-3");
+			IEnumerable<string> reasons = _businessIdSpecification.ReasonsForDissatisfaction;
+			Assert.IsFalse(result);
+			Assert.IsNotEmpty(reasons);
+			Assert.Contains(SpecificationHelper.CheckDigitFailed, (System.Collections.ICollection)reasons);
+		}
 	}
 }
