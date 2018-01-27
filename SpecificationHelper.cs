@@ -15,8 +15,8 @@ namespace CGIExcercise
 	/// </summary>
 	public static class SpecificationHelper
 	{
-		public const string OutOfRange = "field length out of range";
-		public const string SyntacticallyIncorrect = "field syntactically incorrect";
-		public const string CheckDigitFailed = "field failed numeric check";
+		public const string OutOfRange = "id length out of range";
+		public const string SyntacticallyIncorrect = "id syntactically incorrect";
+		public const string CheckDigitFailed = "id failed check digit test";
 	}
 }
