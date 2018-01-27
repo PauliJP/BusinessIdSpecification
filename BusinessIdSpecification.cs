@@ -13,13 +13,14 @@ namespace CGIExcercise
 {
 	/// <summary>
 	/// BusinessIdSpecification class represents a string format entity validator for business-id
-    /// like "1234567-8"
+	/// like "1234567-8"
 	/// </summary>
 	class BusinessIdSpecification : ISpecification<string>
-	{		
+	{
 		private List<string> _ReasonsForDissatisfaction;
 		
-		public BusinessIdSpecification() {
+		public BusinessIdSpecification()
+		{
 			_ReasonsForDissatisfaction = new List<string>();
 		}
 		
@@ -29,9 +30,10 @@ namespace CGIExcercise
 		// Specs from http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm#y-tunnus2
 		/// <param name="businessId">given businessId</param>
 		/// <returns>true if businessId is valid</returns>
-		public bool IsSatisfiedBy(string businessId) {
+		public bool IsSatisfiedBy(string businessId)
+		{
 			bool testOk = true;
-			int[] multiplyOperands = {7, 9, 10, 5, 8, 4, 2};
+			int[] multiplyOperands = { 7, 9, 10, 5, 8, 4, 2 };
 			
 			// static analysis
 			if (businessId.Length == 0 || businessId.Length > 9) {
